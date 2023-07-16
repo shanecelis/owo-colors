@@ -13,7 +13,7 @@ pub struct ComboColorDisplay<'a, Fg: Color, Bg: Color, T>(&'a T, PhantomData<(Fg
 /// Wrapper around a type which implements all the formatters the wrapped type does,
 /// with the addition of changing the foreground and background color. Is not recommended
 /// unless compile-time coloring is not an option.
-pub struct ComboDynColorDisplay<'a, Fg: DynColor, Bg: DynColor, T>(&'a T, Fg, Bg);
+pub struct ComboDynColorDisplay<'a, Fg: DynColor, Bg: DynColor, T>(&'a T, pub Fg, pub Bg);
 
 macro_rules! impl_fmt_for_combo {
     ($($trait:path),* $(,)?) => {

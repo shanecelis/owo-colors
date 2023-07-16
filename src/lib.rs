@@ -159,12 +159,12 @@ pub struct BgColorDisplay<'a, C: Color, T>(&'a T, PhantomData<C>);
 /// Wrapper around a type which implements all the formatters the wrapped type does,
 /// with the addition of changing the foreground color. Is not recommended unless compile-time
 /// coloring is not an option.
-pub struct FgDynColorDisplay<'a, Color: DynColor, T>(&'a T, Color);
+pub struct FgDynColorDisplay<'a, Color: DynColor, T>(&'a T, pub Color);
 
 /// Wrapper around a type which implements all the formatters the wrapped type does,
 /// with the addition of changing the background color. Is not recommended unless compile-time
 /// coloring is not an option.
-pub struct BgDynColorDisplay<'a, Color: DynColor, T>(&'a T, Color);
+pub struct BgDynColorDisplay<'a, Color: DynColor, T>(&'a T, pub Color);
 
 macro_rules! style_methods {
     ($(#[$meta:meta] $name:ident $ty:ident),* $(,)?) => {
