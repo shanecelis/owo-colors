@@ -496,7 +496,7 @@ pub use colors::{
 // TODO: figure out some wait to only implement for fmt::Display | fmt::Debug | ...
 impl<D: Sized> OwoColorize for D {}
 
-pub use {combo::ComboColorDisplay, dyn_colors::*, dyn_styles::*};
+pub use {combo::ComboColorDisplay, combo::ComboDynColorDisplay, dyn_colors::*, dyn_styles::*};
 
 /// Module for drop-in [`colored`](https://docs.rs/colored) support to aid in porting code from
 /// [`colored`](https://docs.rs/colored) to owo-colors.
