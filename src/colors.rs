@@ -130,18 +130,24 @@ macro_rules! impl_fmt_for {
             impl<'a, Color: crate::Color, T: $trait> $trait for FgColorDisplay<'a, Color, T> {
                 #[inline(always)]
                 fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+                    #[cfg(feature = "color")]
                     f.write_str(Color::ANSI_FG)?;
                     <T as $trait>::fmt(&self.0, f)?;
-                    f.write_str("\x1b[39m")
+                    #[cfg(feature = "color")]
+                    f.write_str("\x1b[39m")?;
+                    Ok(())
                 }
             }
 
             impl<'a, Color: crate::Color, T: $trait> $trait for BgColorDisplay<'a, Color, T> {
                 #[inline(always)]
                 fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+                    #[cfg(feature = "color")]
                     f.write_str(Color::ANSI_BG)?;
                     <T as $trait>::fmt(&self.0, f)?;
-                    f.write_str("\x1b[49m")
+                    #[cfg(feature = "color")]
+                    f.write_str("\x1b[49m")?;
+                    Ok(())
                 }
             }
         )*
@@ -166,18 +172,24 @@ macro_rules! impl_fmt_for_dyn {
             impl<'a, Color: crate::DynColor, T: $trait> $trait for FgDynColorDisplay<'a, Color, T> {
                 #[inline(always)]
                 fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+                    #[cfg(feature = "color")]
                     (self.1).fmt_ansi_fg(f)?;
                     <T as $trait>::fmt(&self.0, f)?;
-                    f.write_str("\x1b[39m")
+                    #[cfg(feature = "color")]
+                    f.write_str("\x1b[39m")?;
+                    Ok(())
                 }
             }
 
             impl<'a, Color: crate::DynColor, T: $trait> $trait for BgDynColorDisplay<'a, Color, T> {
                 #[inline(always)]
                 fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+                    #[cfg(feature = "color")]
                     (self.1).fmt_ansi_bg(f)?;
                     <T as $trait>::fmt(&self.0, f)?;
-                    f.write_str("\x1b[49m")
+                    #[cfg(feature = "color")]
+                    f.write_str("\x1b[49m")?;
+                    Ok(())
                 }
             }
         )*

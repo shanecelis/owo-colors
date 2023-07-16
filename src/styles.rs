@@ -9,9 +9,12 @@ macro_rules! impl_fmt_for_style {
         $(
             impl<'a, T: $trait> $trait for $ty<'a, T> {
                 fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+                    #[cfg(feature = "color")]
                     f.write_str($ansi)?;
                     <_ as $trait>::fmt(&self.0, f)?;
-                    f.write_str("\x1b[0m")
+                    #[cfg(feature = "color")]
+                    f.write_str("\x1b[0m")?;
+                    Ok(())
                 }
             }
         )*
